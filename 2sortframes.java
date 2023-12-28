@@ -1,39 +1,35 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 
-public class sort2 {
+class Frame {
+    int number;
+    String data;
+}
+
+public class FrameSort {
     public static void main(String[] args) {
-        List<int[]> frame = new ArrayList<>();
-        System.out.println("Enter no. of frames:");
         Scanner sc = new Scanner(System.in);
+        System.out.print("Enter the number of frames: ");
         int n = sc.nextInt();
-
+        Frame[] frames = new Frame[n];
         for (int i = 0; i < n; i++) {
-            Random random = new Random();
-            int seqNum = random.nextInt(1000) + 1;
-            System.out.printf("Enter data for %dth frame>>", i + 1);
-            int data = sc.nextInt();
-            frame.add(new int[]{seqNum, data});
+            frames[i] = new Frame();
+            System.out.print("Enter the frame number: ");
+            frames[i].number = sc.nextInt();
+            System.out.print("Enter the frame data: ");
+            frames[i].data = sc.next();
         }
-
-        System.out.println("\n\nBefore Sorting>>");
-        for (int[] i : frame) {
-            System.out.printf("seqNum->%d, Data->%d\n", i[0], i[1]);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (frames[j].number > frames[j + 1].number) {
+                    Frame temp = frames[j];
+                    frames[j] = frames[j + 1];
+                    frames[j + 1] = temp;
+                }
+            }
         }
-
-        frame = sortFrame(frame);
-
-        System.out.println("\n\n After sorting>>");
-        for (int[] i : frame) {
-            System.out.printf("seqNum->%d, Data->%d\n", i[0], i[1]);
-        }
-    }
-
-    public static List<int[]> sortFrame(List<int[]> frame) {
-        Collections.sort(frame, (a, b) -> Integer.compare(a[0], b[0]));
-        return frame;
+        System.out.println("Sorted Frames Are:");
+        for (int i = 0; i < n; i++)
+            System.out.print(frames[i].data + " ");
+        sc.close();
     }
 }
